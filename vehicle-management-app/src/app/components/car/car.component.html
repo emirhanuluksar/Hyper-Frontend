@@ -1,0 +1,5 @@
+<ng-container *ngIf="cars$ | async as cars">
+  <div *ngFor="let car of cars">
+    {{ car.color }} Car with {{ car.wheels }} wheels
+  </div>
+</ng-container>
