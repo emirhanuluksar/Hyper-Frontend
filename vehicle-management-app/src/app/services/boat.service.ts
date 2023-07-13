@@ -21,4 +21,49 @@ export class BoatService {
       })
     );
   }
+
+  addBoat(boat: Boat): Observable<Boat> {
+    const endpoint = `${this.apiUrl}boat/AddBoat`;
+    return this.http.post<Boat>(endpoint, boat).pipe(
+      tap((newBoat) => {
+        console.log('Added boat:', newBoat);
+      })
+    );
+  }
+
+  updateBoat(boat: Boat): Observable<Boat> {
+    const endpoint = `${this.apiUrl}boat/UpdateBoat`;
+    return this.http.put<Boat>(endpoint, boat).pipe(
+      tap((updatedBoat) => {
+        console.log('Updated boat:', updatedBoat);
+      })
+    );
+  }
+
+  deleteBoat(boat: Boat): Observable<Boat> {
+    const endpoint = `${this.apiUrl}boat/DeleteBoat/${boat.id}`;
+    return this.http.delete<Boat>(endpoint).pipe(
+      tap((deletedBoat) => {
+        console.log('Deleted boat:', deletedBoat);
+      })
+    );
+  }
+
+  getBoatsByColor(color: string): Observable<Boat[]> {
+    const endpoint = `${this.apiUrl}boat/GetBoatsByColor/${color}`;
+    return this.http.get<Boat[]>(endpoint).pipe(
+      tap((boats) => {
+        console.log('GetBoatsByColor:', boats);
+      })
+    );
+  }
+
+  getBoatById(id: string): Observable<Boat> {
+    const endpoint = `${this.apiUrl}boat/GetBoatById/${id}`;
+    return this.http.get<Boat>(endpoint).pipe(
+      tap((boat) => {
+        console.log('Boat:', boat);
+      })
+    );
+  }
 }

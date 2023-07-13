@@ -22,6 +22,10 @@ import { BoatService } from './services/boat.service';
 import { VehicleEffects } from 'src/store/effects/vehicle.effects';
 import { vehiclesReducer } from 'src/store/reducers/vehicle.reducer';
 import { VehicleService } from './services/vehicle.service';
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { TooltipModule } from 'ngx-bootstrap/tooltip';
+import { ModalModule } from 'ngx-bootstrap/modal';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -33,6 +37,7 @@ import { VehicleService } from './services/vehicle.service';
   ],
   imports: [
     BrowserModule,
+    FormsModule,
     HttpClientModule,
     StoreModule.forRoot({
       cars: carsReducer,
@@ -47,6 +52,9 @@ import { VehicleService } from './services/vehicle.service';
       VehicleEffects,
     ]),
     AppRoutingModule,
+    BsDropdownModule.forRoot(),
+    TooltipModule.forRoot(),
+    ModalModule.forRoot(),
   ],
   providers: [CarService, BusService, BoatService, VehicleService],
   bootstrap: [AppComponent],
