@@ -1,5 +1,36 @@
-<ng-container *ngIf="cars$ | async as cars">
-  <div *ngFor="let car of cars">
-    {{ car.color }} Car with {{ car.wheels }} wheels
-  </div>
-</ng-container>
+<table class="table">
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>Vehicle Type</th>
+      <th>Color</th>
+      <th>Capacity</th>
+      <th>Length</th>
+      <th>Wheels</th>
+      <th>Headlights On</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let car of cars">
+      <td>{{ car.id }}</td>
+      <td>{{ car.vehicleType }}</td>
+      <td>{{ car.color }}</td>
+      <td>{{ car.capacity }}</td>
+      <td>{{ car.length }}</td>
+      <td>{{ car.wheels }}</td>
+      <td>
+        <div class="d-flex align-items-center">
+          <span
+            *ngIf="car.headlightsOn; else offTemplate"
+            class="mr-2 text-success"
+            >On</span
+          >
+          <ng-template #offTemplate>
+            <span class="mr-2 text-danger">Off</span>
+          </ng-template>
+          <button class="btn btn-primary headlights-toggle">Toggle</button>
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</table>
