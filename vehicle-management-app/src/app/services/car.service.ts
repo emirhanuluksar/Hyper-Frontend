@@ -35,10 +35,11 @@ export class CarService {
   }
 
   updateCar(car: Car): Observable<Car> {
+    console.log(car);
     const endpoint = `${this.apiUrl}car/UpdateCar`;
     return this.http.put<Car>(endpoint, car).pipe(
-      tap((updatedCar) => {
-        console.log('Updated car:', updatedCar);
+      tap((updateCar) => {
+        console.log('Updated car:', updateCar);
       })
     );
   }

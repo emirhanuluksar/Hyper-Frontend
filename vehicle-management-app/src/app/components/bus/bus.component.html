@@ -1,20 +1,22 @@
-<table class="table">
-  <thead>
-    <tr>
-      <th>Id</th>
-      <th>Vehicle Type</th>
-      <th>Color</th>
-      <th>Capacity</th>
-      <th>Length</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let bus of buses">
-      <td>{{ bus.id }}</td>
-      <td>{{ bus.vehicleType }}</td>
-      <td>{{ bus.color }}</td>
-      <td>{{ bus.capacity }}</td>
-      <td>{{ bus.length }}</td>
-    </tr>
-  </tbody>
-</table>
+<div class="container">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Id</th>
+        <th>Vehicle Type</th>
+        <th>Color</th>
+        <th>Capacity</th>
+        <th>Length</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let bus of buses">
+        <td>{{ bus.id }}</td>
+        <td>{{ bus.vehicleType }}</td>
+        <td>{{ bus.color }}</td>
+        <td>{{ bus.capacity }}</td>
+        <td>{{ bus.length }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

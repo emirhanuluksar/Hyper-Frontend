@@ -27,7 +27,6 @@ export const carsReducer = createReducer(
   on(addCarSuccess, (state, { car }) => ({
     ...state,
     cars: [...state.cars, car],
-    addCarSuccess: true,
   })),
   on(updateCarSuccess, (state, { car }) => ({
     ...state,
