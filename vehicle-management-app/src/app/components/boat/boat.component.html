@@ -7,6 +7,7 @@
         <th>Color</th>
         <th>Capacity</th>
         <th>Length</th>
+        <th>Actions</th>
       </tr>
     </thead>
     <tbody>
@@ -16,7 +17,193 @@
         <td>{{ boat.color }}</td>
         <td>{{ boat.capacity }}</td>
         <td>{{ boat.length }}</td>
+        <td>
+          <button class="btn btn-primary" (click)="openUpdateBoatPopup(boat)">
+            Update
+          </button>
+          <button class="btn btn-danger" (click)="openDeleteBoatPopup(boat)">
+            Delete
+          </button>
+        </td>
       </tr>
     </tbody>
   </table>
+
+  <!-- Add Boat Popup -->
+  <div class="add-boat-popup">
+    <button class="btn btn-primary add-boat-btn" (click)="openAddBoatPopup()">
+      Add Boat
+    </button>
+
+    <ng-template #addBoatPopupTemplate>
+      <div class="modal-header">
+        <h4 class="modal-title">Add Boat</h4>
+        <button
+          type="button"
+          class="close"
+          aria-label="Close"
+          (click)="closeAddBoatPopup()"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form (ngSubmit)="addBoat()" [formGroup]="newBoatForm">
+          <div class="form-group">
+            <label for="color">Color:</label>
+            <input
+              type="text"
+              id="color"
+              class="form-control"
+              formControlName="color"
+            />
+            <div
+              *ngIf="
+                newBoatForm.get('color')?.invalid &&
+                newBoatForm.get('color')?.touched
+              "
+              class="text-danger"
+            >
+              Color is required.
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="capacity">Capacity:</label>
+            <input
+              type="number"
+              id="capacity"
+              class="form-control"
+              formControlName="capacity"
+            />
+            <div
+              *ngIf="
+                newBoatForm.get('capacity')?.invalid &&
+                newBoatForm.get('capacity')?.touched
+              "
+              class="text-danger"
+            >
+              Capacity is required and should be greater than or equal to 1.
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="length">Length:</label>
+            <input
+              type="number"
+              id="length"
+              class="form-control"
+              formControlName="length"
+            />
+            <div
+              *ngIf="
+                newBoatForm.get('length')?.invalid &&
+                newBoatForm.get('length')?.touched
+              "
+              class="text-danger"
+            >
+              Length is required and should be greater than or equal to 1.
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary">Add</button>
+        </form>
+      </div>
+    </ng-template>
+  </div>
+
+  <!-- Update Boat Popup -->
+  <ng-template #updateBoatPopupTemplate>
+    <div class="modal-header">
+      <h4 class="modal-title">Update Boat</h4>
+      <button
+        type="button"
+        class="close"
+        aria-label="Close"
+        (click)="closeUpdateBoatPopup()"
+      >
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form (submit)="updateBoat()" [formGroup]="updateBoatForm">
+        <div class="form-group">
+          <label for="color">Color:</label>
+          <input
+            type="text"
+            id="color"
+            class="form-control"
+            formControlName="color"
+            [ngClass]="{
+              'is-invalid':
+                updateBoatForm.get('color')?.invalid &&
+                updateBoatForm.get('color')?.touched
+            }"
+          />
+          <div
+            *ngIf="
+              updateBoatForm.get('color')?.invalid &&
+              updateBoatForm.get('color')?.touched
+            "
+            class="text-danger"
+          >
+            Color is required and must be a string with at least 2 letters.
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="capacity">Capacity:</label>
+          <input
+            type="number"
+            id="capacity"
+            class="form-control"
+            formControlName="capacity"
+          />
+          <div
+            *ngIf="
+              updateBoatForm.get('capacity')?.invalid &&
+              updateBoatForm.get('capacity')?.touched
+            "
+            class="text-danger"
+          >
+            Capacity is required and should be greater than or equal to 1.
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="length">Length:</label>
+          <input
+            type="number"
+            id="length"
+            class="form-control"
+            formControlName="length"
+          />
+          <div
+            *ngIf="
+              updateBoatForm.get('length')?.invalid &&
+              updateBoatForm.get('length')?.touched
+            "
+            class="text-danger"
+          >
+            Length is required and should be greater than or equal to 1.
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Update</button>
+      </form>
+    </div>
+  </ng-template>
+
+  <!-- Delete Boat Popup -->
+  <ng-template #deleteBoatPopupTemplate>
+    <div class="delete-boat-popup">
+      <div class="modal-header">
+        <h4 class="modal-title">Are you sure you want to delete?</h4>
+      </div>
+      <div class="modal-body">
+        <div class="btn-group">
+          <button class="btn btn-danger" (click)="deleteBoat()">Yes</button>
+          <button class="btn btn-secondary" (click)="closeDeleteBoatPopup()">
+            No
+          </button>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+
+  <!-- Rest of the code -->
 </div>

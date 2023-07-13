@@ -164,30 +164,6 @@
     <div class="modal-body">
       <form (submit)="updateCar()" [formGroup]="updateCarForm">
         <div class="form-group">
-          <label for="vehicleType">Vehicle Type:</label>
-          <input
-            type="text"
-            id="vehicleType"
-            class="form-control"
-            formControlName="vehicleType"
-            [ngClass]="{
-              'is-invalid':
-                updateCarForm.get('vehicleType')?.invalid &&
-                updateCarForm.get('vehicleType')?.touched
-            }"
-          />
-          <div
-            *ngIf="
-              updateCarForm.get('vehicleType')?.invalid &&
-              updateCarForm.get('vehicleType')?.touched
-            "
-            class="text-danger"
-          >
-            Vehicle Type is required and must be a string with at least 2
-            letters.
-          </div>
-        </div>
-        <div class="form-group">
           <label for="color">Color:</label>
           <input
             type="text"

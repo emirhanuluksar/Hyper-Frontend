@@ -7,6 +7,7 @@
         <th>Color</th>
         <th>Capacity</th>
         <th>Length</th>
+        <th>Actions</th>
       </tr>
     </thead>
     <tbody>
@@ -16,7 +17,193 @@
         <td>{{ bus.color }}</td>
         <td>{{ bus.capacity }}</td>
         <td>{{ bus.length }}</td>
+        <td>
+          <button class="btn btn-primary" (click)="openUpdateBusPopup(bus)">
+            Update
+          </button>
+          <button class="btn btn-danger" (click)="openDeleteBusPopup(bus)">
+            Delete
+          </button>
+        </td>
       </tr>
     </tbody>
   </table>
+
+  <!-- Add Bus Popup -->
+  <div class="add-bus-popup">
+    <button class="btn btn-primary add-bus-btn" (click)="openAddBusPopup()">
+      Add Bus
+    </button>
+
+    <ng-template #addBusPopupTemplate>
+      <div class="modal-header">
+        <h4 class="modal-title">Add Bus</h4>
+        <button
+          type="button"
+          class="close"
+          aria-label="Close"
+          (click)="closeAddBusPopup()"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form (ngSubmit)="addBus()" [formGroup]="newBusForm">
+          <div class="form-group">
+            <label for="color">Color:</label>
+            <input
+              type="text"
+              id="color"
+              class="form-control"
+              formControlName="color"
+            />
+            <div
+              *ngIf="
+                newBusForm.get('color')?.invalid &&
+                newBusForm.get('color')?.touched
+              "
+              class="text-danger"
+            >
+              Color is required.
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="capacity">Capacity:</label>
+            <input
+              type="number"
+              id="capacity"
+              class="form-control"
+              formControlName="capacity"
+            />
+            <div
+              *ngIf="
+                newBusForm.get('capacity')?.invalid &&
+                newBusForm.get('capacity')?.touched
+              "
+              class="text-danger"
+            >
+              Capacity is required and should be greater than or equal to 1.
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="length">Length:</label>
+            <input
+              type="number"
+              id="length"
+              class="form-control"
+              formControlName="length"
+            />
+            <div
+              *ngIf="
+                newBusForm.get('length')?.invalid &&
+                newBusForm.get('length')?.touched
+              "
+              class="text-danger"
+            >
+              Length is required and should be greater than or equal to 1.
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary">Add</button>
+        </form>
+      </div>
+    </ng-template>
+  </div>
+
+  <!-- Update Bus Popup -->
+  <ng-template #updateBusPopupTemplate>
+    <div class="modal-header">
+      <h4 class="modal-title">Update Bus</h4>
+      <button
+        type="button"
+        class="close"
+        aria-label="Close"
+        (click)="closeUpdateBusPopup()"
+      >
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form (submit)="updateBus()" [formGroup]="updateBusForm">
+        <div class="form-group">
+          <label for="color">Color:</label>
+          <input
+            type="text"
+            id="color"
+            class="form-control"
+            formControlName="color"
+            [ngClass]="{
+              'is-invalid':
+                updateBusForm.get('color')?.invalid &&
+                updateBusForm.get('color')?.touched
+            }"
+          />
+          <div
+            *ngIf="
+              updateBusForm.get('color')?.invalid &&
+              updateBusForm.get('color')?.touched
+            "
+            class="text-danger"
+          >
+            Color is required and must be a string with at least 2 letters.
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="capacity">Capacity:</label>
+          <input
+            type="number"
+            id="capacity"
+            class="form-control"
+            formControlName="capacity"
+          />
+          <div
+            *ngIf="
+              updateBusForm.get('capacity')?.invalid &&
+              updateBusForm.get('capacity')?.touched
+            "
+            class="text-danger"
+          >
+            Capacity is required and should be greater than or equal to 1.
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="length">Length:</label>
+          <input
+            type="number"
+            id="length"
+            class="form-control"
+            formControlName="length"
+          />
+          <div
+            *ngIf="
+              updateBusForm.get('length')?.invalid &&
+              updateBusForm.get('length')?.touched
+            "
+            class="text-danger"
+          >
+            Length is required and should be greater than or equal to 1.
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Update</button>
+      </form>
+    </div>
+  </ng-template>
+
+  <!-- Delete Bus Popup -->
+  <ng-template #deleteBusPopupTemplate>
+    <div class="delete-bus-popup">
+      <div class="modal-header">
+        <h4 class="modal-title">Are you sure you want to delete?</h4>
+      </div>
+      <div class="modal-body">
+        <div class="btn-group">
+          <button class="btn btn-danger" (click)="deleteBus()">Yes</button>
+          <button class="btn btn-secondary" (click)="closeDeleteBusPopup()">
+            No
+          </button>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+
+  <!-- Rest of the code -->
 </div>

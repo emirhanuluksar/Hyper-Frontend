@@ -19,7 +19,6 @@ import {
 } from '../../../store/actions/car.actions';
 import { AppState } from '../../../store/model/app.state';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
-import { CarRequest } from 'src/store/model/car-request.model';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
