@@ -9,16 +9,46 @@ import { CarComponent } from '../app/components/car/car.component';
 import { carsReducer } from '../store/reducers/car.reducer';
 import { CarsEffects } from '../store/effects/car.effects';
 import { CarService } from '../app/services/car.service';
+import { BusComponent } from './components/bus/bus.component';
+import { BoatComponent } from './components/boat/boat.component';
+import { VehicleComponent } from './components/vehicle/vehicle.component';
+import { AppRoutingModule } from './app-routing.module';
+import { BusService } from './services/bus.service';
+import { BusesEffects } from 'src/store/effects/bus.effects';
+import { busesReducer } from 'src/store/reducers/bus.reducer';
+import { boatsReducer } from 'src/store/reducers/boat.reducer';
+import { BoatsEffects } from 'src/store/effects/boat.effects';
+import { BoatService } from './services/boat.service';
+import { VehicleEffects } from 'src/store/effects/vehicle.effects';
+import { vehiclesReducer } from 'src/store/reducers/vehicle.reducer';
+import { VehicleService } from './services/vehicle.service';
 
 @NgModule({
-  declarations: [AppComponent, CarComponent],
+  declarations: [
+    AppComponent,
+    CarComponent,
+    BusComponent,
+    BoatComponent,
+    VehicleComponent,
+  ],
   imports: [
     BrowserModule,
     HttpClientModule,
-    StoreModule.forRoot({ cars: carsReducer }),
-    EffectsModule.forRoot([CarsEffects]),
+    StoreModule.forRoot({
+      cars: carsReducer,
+      buses: busesReducer,
+      boats: boatsReducer,
+      vehicles: vehiclesReducer,
+    }),
+    EffectsModule.forRoot([
+      CarsEffects,
+      BusesEffects,
+      BoatsEffects,
+      VehicleEffects,
+    ]),
+    AppRoutingModule,
   ],
-  providers: [CarService],
+  providers: [CarService, BusService, BoatService, VehicleService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
