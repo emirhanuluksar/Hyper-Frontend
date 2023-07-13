@@ -164,22 +164,28 @@
     <div class="modal-body">
       <form (submit)="updateCar()" [formGroup]="updateCarForm">
         <div class="form-group">
-          <label for="id">ID:</label>
-          <input
-            type="text"
-            id="id"
-            class="form-control"
-            formControlName="id"
-          />
-        </div>
-        <div class="form-group">
           <label for="vehicleType">Vehicle Type:</label>
           <input
             type="text"
             id="vehicleType"
             class="form-control"
             formControlName="vehicleType"
+            [ngClass]="{
+              'is-invalid':
+                updateCarForm.get('vehicleType')?.invalid &&
+                updateCarForm.get('vehicleType')?.touched
+            }"
           />
+          <div
+            *ngIf="
+              updateCarForm.get('vehicleType')?.invalid &&
+              updateCarForm.get('vehicleType')?.touched
+            "
+            class="text-danger"
+          >
+            Vehicle Type is required and must be a string with at least 2
+            letters.
+          </div>
         </div>
         <div class="form-group">
           <label for="color">Color:</label>
@@ -188,34 +194,75 @@
             id="color"
             class="form-control"
             formControlName="color"
+            [ngClass]="{
+              'is-invalid':
+                updateCarForm.get('color')?.invalid &&
+                updateCarForm.get('color')?.touched
+            }"
           />
+          <div
+            *ngIf="
+              updateCarForm.get('color')?.invalid &&
+              updateCarForm.get('color')?.touched
+            "
+            class="text-danger"
+          >
+            Color is required and must be a string with at least 2 letters.
+          </div>
         </div>
         <div class="form-group">
           <label for="capacity">Capacity:</label>
           <input
-            type="text"
+            type="number"
             id="capacity"
             class="form-control"
             formControlName="capacity"
           />
+          <div
+            *ngIf="
+              updateCarForm.get('capacity')?.invalid &&
+              updateCarForm.get('capacity')?.touched
+            "
+            class="text-danger"
+          >
+            Capacity is required and should be greater than or equal to 1.
+          </div>
         </div>
         <div class="form-group">
           <label for="length">Length:</label>
           <input
-            type="text"
+            type="number"
             id="length"
             class="form-control"
             formControlName="length"
           />
+          <div
+            *ngIf="
+              updateCarForm.get('length')?.invalid &&
+              updateCarForm.get('length')?.touched
+            "
+            class="text-danger"
+          >
+            Length is required and should be greater than or equal to 1.
+          </div>
         </div>
         <div class="form-group">
           <label for="wheels">Wheels:</label>
           <input
-            type="text"
+            type="number"
             id="wheels"
             class="form-control"
             formControlName="wheels"
           />
+          <div
+            *ngIf="
+              updateCarForm.get('wheels')?.invalid &&
+              updateCarForm.get('wheels')?.touched
+            "
+            class="text-danger"
+          >
+            Wheels is required and should be greater than or equal to 2.
+          </div>
         </div>
         <button type="submit" class="btn btn-primary">Update</button>
       </form>
