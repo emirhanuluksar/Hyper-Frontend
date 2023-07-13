@@ -1,5 +1,7 @@
 import { createAction, props } from '@ngrx/store';
 import { Car } from '../model/car.model';
+import { CarRequest } from '../model/car-request.model';
+import { CarResponse } from '../model/car-response.model';
 
 export const getCars = createAction('[Cars] Get Cars');
 
@@ -13,7 +15,10 @@ export const getCarsFailure = createAction(
   props<{ error: any }>()
 );
 
-export const addCar = createAction('[Car] Add Car', props<{ car: Car }>());
+export const addCar = createAction(
+  '[Car] Add Car',
+  props<{ car: CarRequest }>()
+);
 export const addCarSuccess = createAction(
   '[Car] Add Car Success',
   props<{ car: Car }>()

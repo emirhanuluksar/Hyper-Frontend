@@ -4,6 +4,8 @@ import { Observable } from 'rxjs';
 import { Car } from '../../store/model/car.model';
 import { tap, map, endWith } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
+import { CarRequest } from 'src/store/model/car-request.model';
+import { CarResponse } from 'src/store/model/car-response.model';
 
 @Injectable()
 export class CarService {
@@ -23,7 +25,7 @@ export class CarService {
     );
   }
 
-  addCar(car: Car): Observable<Car> {
+  addCar(car: CarRequest): Observable<Car> {
     const endpoint = `${this.apiUrl}car/AddCar`;
     return this.http.post<Car>(endpoint, car).pipe(
       tap((newCar) => {

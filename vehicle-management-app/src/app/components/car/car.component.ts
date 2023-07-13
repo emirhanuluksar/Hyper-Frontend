@@ -10,12 +10,15 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { Car } from '../../../store/model/car.model';
 import {
+  addCar,
   getCars,
   turnOffTheHeadlight,
   turnOnTheHeadlight,
 } from '../../../store/actions/car.actions';
 import { AppState } from '../../../store/model/app.state';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import { CarRequest } from 'src/store/model/car-request.model';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-car',
@@ -37,20 +40,14 @@ export class CarComponent implements OnInit, OnDestroy {
   cars: Car[] = [];
   showAddCarPopup = false;
   showUpdateCarPopup = false;
-  newCar: Car = {
-    id: '',
-    vehicleType: '',
-    color: '',
-    capacity: 0,
-    length: 0,
-    wheels: 0,
-    headlightsOn: false,
-  };
   selectedCar: Car | null = null;
+
+  newCarForm!: FormGroup; // Yeni araba formu
 
   constructor(
     private store: Store<AppState>,
-    private modalService: BsModalService
+    private modalService: BsModalService,
+    private formBuilder: FormBuilder // FormBuilder'ı enjekte edin
   ) {}
 
   ngOnInit() {
@@ -63,6 +60,13 @@ export class CarComponent implements OnInit, OnDestroy {
       .subscribe((cars) => {
         this.cars = cars || [];
       });
+
+    this.newCarForm = this.formBuilder.group({
+      color: ['', Validators.required],
+      capacity: [0, [Validators.required, Validators.min(1)]],
+      length: [0, [Validators.required, Validators.min(1)]],
+      wheels: [0, [Validators.required, Validators.min(2)]],
+    });
   }
 
   ngOnDestroy() {
@@ -86,5 +90,17 @@ export class CarComponent implements OnInit, OnDestroy {
 
   closeAddCarPopup() {
     this.addCarPopupRef.hide();
+  }
+
+  addCar() {
+    if (this.newCarForm.invalid) {
+      // Form doğrulama işlemi
+      this.newCarForm.markAllAsTouched(); // Formdaki tüm alanları "dokunulmuş" olarak işaretle
+      return;
+    }
+
+    this.store.dispatch(addCar({ car: this.newCarForm.value }));
+    this.newCarForm.reset(); // Formu sıfırla
+    this.closeAddCarPopup();
   }
 }

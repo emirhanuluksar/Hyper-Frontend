@@ -1,132 +1,152 @@
-<table class="table">
-  <thead>
-    <tr>
-      <th>Id</th>
-      <th>Vehicle Type</th>
-      <th>Color</th>
-      <th>Capacity</th>
-      <th>Length</th>
-      <th>Wheels</th>
-      <th>Headlights On</th>
-      <th>Actions</th>
-      <!-- New column for update and delete buttons -->
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let car of cars">
-      <td>{{ car.id }}</td>
-      <td>{{ car.vehicleType }}</td>
-      <td>{{ car.color }}</td>
-      <td>{{ car.capacity }}</td>
-      <td>{{ car.length }}</td>
-      <td>{{ car.wheels }}</td>
-      <td>
-        <div class="d-flex align-items-center">
-          <span
-            *ngIf="car.headlightsOn; else offTemplate"
-            class="mr-2 text-success"
-            >On</span
-          >
-          <ng-template #offTemplate>
-            <span class="mr-2 text-danger">Off</span>
-          </ng-template>
-          <button
-            class="btn btn-primary headlights-toggle"
-            (click)="toggleHeadlights(car)"
-          >
-            {{ car.headlightsOn ? "Turn Off" : "Turn On" }}
-          </button>
-        </div>
-      </td>
-      <td>
-        <button class="btn btn-primary">Update</button>
-        <button class="btn btn-danger">Delete</button>
-      </td>
-    </tr>
-  </tbody>
-</table>
+<div class="container">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Id</th>
+        <th>Vehicle Type</th>
+        <th>Color</th>
+        <th>Capacity</th>
+        <th>Length</th>
+        <th>Wheels</th>
+        <th>Headlights On</th>
+        <th>Actions</th>
+        <!-- New column for update and delete buttons -->
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let car of cars">
+        <td>{{ car.id }}</td>
+        <td>{{ car.vehicleType }}</td>
+        <td>{{ car.color }}</td>
+        <td>{{ car.capacity }}</td>
+        <td>{{ car.length }}</td>
+        <td>{{ car.wheels }}</td>
+        <td>
+          <div class="d-flex align-items-center">
+            <span
+              *ngIf="car.headlightsOn; else offTemplate"
+              class="mr-2 text-success"
+              >On</span
+            >
+            <ng-template #offTemplate>
+              <span class="mr-2 text-danger">Off</span>
+            </ng-template>
+            <button
+              class="btn btn-primary headlights-toggle"
+              (click)="toggleHeadlights(car)"
+            >
+              {{ car.headlightsOn ? "Turn Off" : "Turn On" }}
+            </button>
+          </div>
+        </td>
+        <td>
+          <button class="btn btn-primary">Update</button>
+          <button class="btn btn-danger">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 
-<!-- Add Car Popup -->
-<div class="add-car-popup">
-  <button class="btn btn-primary add-car-btn" (click)="openAddCarPopup()">
-    Add Car
-  </button>
+  <!-- Add Car Popup -->
+  <div class="add-car-popup">
+    <button class="btn btn-primary add-car-btn" (click)="openAddCarPopup()">
+      Add Car
+    </button>
 
-  <ng-template #addCarPopupTemplate>
-    <div class="modal-header">
-      <h4 class="modal-title">Add Car</h4>
-      <button
-        type="button"
-        class="close"
-        aria-label="Close"
-        (click)="closeAddCarPopup()"
-      >
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    <div class="modal-body">
-      <form>
-        <div class="form-group">
-          <label for="vehicleType">Vehicle Type:</label>
-          <input
-            type="text"
-            id="vehicleType"
-            class="form-control"
-            [(ngModel)]="newCar.vehicleType"
-            required
-          />
-        </div>
-        <div class="form-group">
-          <label for="color">Color:</label>
-          <input
-            type="text"
-            id="color"
-            class="form-control"
-            [(ngModel)]="newCar.color"
-            required
-          />
-        </div>
-        <div class="form-group">
-          <label for="capacity">Capacity:</label>
-          <input
-            type="number"
-            id="capacity"
-            class="form-control"
-            [(ngModel)]="newCar.capacity"
-            min="1"
-            required
-          />
-        </div>
-        <div class="form-group">
-          <label for="length">Length:</label>
-          <input
-            type="number"
-            id="length"
-            class="form-control"
-            [(ngModel)]="newCar.length"
-            min="1"
-            required
-          />
-        </div>
-        <div class="form-group">
-          <label for="wheels">Wheels:</label>
-          <input
-            type="number"
-            id="wheels"
-            class="form-control"
-            [(ngModel)]="newCar.wheels"
-            min="1"
-            required
-          />
-        </div>
-        <button type="submit" class="btn btn-primary">Add</button>
-      </form>
-    </div>
-  </ng-template>
-</div>
+    <ng-template #addCarPopupTemplate>
+      <div class="modal-header">
+        <h4 class="modal-title">Add Car</h4>
+        <button
+          type="button"
+          class="close"
+          aria-label="Close"
+          (click)="closeAddCarPopup()"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form (ngSubmit)="addCar()" [formGroup]="newCarForm">
+          <div class="form-group">
+            <label for="color">Color:</label>
+            <input
+              type="text"
+              id="color"
+              class="form-control"
+              formControlName="color"
+            />
+            <div
+              *ngIf="
+                newCarForm.get('color')?.invalid &&
+                newCarForm.get('color')?.touched
+              "
+              class="text-danger"
+            >
+              Color is required.
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="capacity">Capacity:</label>
+            <input
+              type="number"
+              id="capacity"
+              class="form-control"
+              formControlName="capacity"
+            />
+            <div
+              *ngIf="
+                newCarForm.get('capacity')?.invalid &&
+                newCarForm.get('capacity')?.touched
+              "
+              class="text-danger"
+            >
+              Capacity is required and should be greater than or equal to 1.
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="length">Length:</label>
+            <input
+              type="number"
+              id="length"
+              class="form-control"
+              formControlName="length"
+            />
+            <div
+              *ngIf="
+                newCarForm.get('length')?.invalid &&
+                newCarForm.get('length')?.touched
+              "
+              class="text-danger"
+            >
+              Length is required and should be greater than or equal to 1.
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="wheels">Wheels:</label>
+            <input
+              type="number"
+              id="wheels"
+              class="form-control"
+              formControlName="wheels"
+            />
+            <div
+              *ngIf="
+                newCarForm.get('wheels')?.invalid &&
+                newCarForm.get('wheels')?.touched
+              "
+              class="text-danger"
+            >
+              Wheels is required and should be greater than or equal to 2.
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary">Add</button>
+        </form>
+      </div>
+    </ng-template>
+  </div>
 
-<!-- Update Car Popup -->
-<!-- <ng-template #updateCarPopupTemplate>
+  <!-- Update Car Popup -->
+  <!-- <ng-template #updateCarPopupTemplate>
   <div class="modal-header">
     <h4 class="modal-title">Update Car</h4>
     <button
@@ -198,8 +218,8 @@
   </div>
 </ng-template> -->
 
-<!-- Delete Car Popup -->
-<!-- <ng-template #deleteCarPopupTemplate>
+  <!-- Delete Car Popup -->
+  <!-- <ng-template #deleteCarPopupTemplate>
   <div class="delete-car-popup">
     <div class="modal-header">
       <h4 class="modal-title">Are you sure you want to delete?</h4>
@@ -215,4 +235,5 @@
   </div>
 </ng-template> -->
 
-<!-- Rest of the code -->
+  <!-- Rest of the code -->
+</div>

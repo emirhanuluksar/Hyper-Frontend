@@ -6,19 +6,19 @@ import {
   getCarByIdSuccess,
   getCarsByColorSuccess,
   getCarsSuccess,
-  turnOffTheHeadlight,
   turnOffTheHeadlightSuccess,
-  turnOnTheHeadlight,
   turnOnTheHeadlightSuccess,
   updateCarSuccess,
 } from '../actions/car.actions';
 
 export interface CarState {
   cars: Car[];
+  addCarSuccess: boolean;
 }
 
 export const initialState: CarState = {
   cars: [],
+  addCarSuccess: false,
 };
 
 export const carsReducer = createReducer(
@@ -27,6 +27,7 @@ export const carsReducer = createReducer(
   on(addCarSuccess, (state, { car }) => ({
     ...state,
     cars: [...state.cars, car],
+    addCarSuccess: true,
   })),
   on(updateCarSuccess, (state, { car }) => ({
     ...state,
